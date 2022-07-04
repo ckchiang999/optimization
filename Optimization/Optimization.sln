@@ -5,7 +5,9 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "Optimization", "Optimization\Optimization.sfproj", "{88EDF1C1-519C-4D4F-8113-EF416D8F1904}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizationService", "OptimizationService\OptimizationService.csproj", "{7C27FC47-A6C1-4890-A243-E816E3D4631E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptimizationService", "OptimizationService\OptimizationService.csproj", "{7C27FC47-A6C1-4890-A243-E816E3D4631E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearOptimizationService", "LinearOptimizationService\LinearOptimizationService.csproj", "{02C19C68-D3A5-499D-8E7C-E5A3640624BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,14 @@ Global
 		{7C27FC47-A6C1-4890-A243-E816E3D4631E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7C27FC47-A6C1-4890-A243-E816E3D4631E}.Release|x64.ActiveCfg = Release|Any CPU
 		{7C27FC47-A6C1-4890-A243-E816E3D4631E}.Release|x64.Build.0 = Release|Any CPU
+		{02C19C68-D3A5-499D-8E7C-E5A3640624BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02C19C68-D3A5-499D-8E7C-E5A3640624BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02C19C68-D3A5-499D-8E7C-E5A3640624BD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{02C19C68-D3A5-499D-8E7C-E5A3640624BD}.Debug|x64.Build.0 = Debug|Any CPU
+		{02C19C68-D3A5-499D-8E7C-E5A3640624BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02C19C68-D3A5-499D-8E7C-E5A3640624BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02C19C68-D3A5-499D-8E7C-E5A3640624BD}.Release|x64.ActiveCfg = Release|Any CPU
+		{02C19C68-D3A5-499D-8E7C-E5A3640624BD}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
