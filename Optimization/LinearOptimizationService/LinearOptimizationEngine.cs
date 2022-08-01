@@ -11,14 +11,17 @@ namespace LinearOptimizationService
         }
 
         /// <summary>
-        /// An example solving a simple linear function.
-        /// Objective function: 3x + y
-        /// Maximize 3x + y subject to the following constraints:
-        ///   0 <= x <= 1
-        ///   0 <= y <= 2
-        ///   x + y <= 2
+        /// Solves a simple Linear Programming problem.
+        /// <para>Maximize 3x + y subject to the following constraints:</para>
+        /// <code>
+        /// 0 &lt;= x &lt;= 1
+        /// 0 &lt;= y &lt;= 2
+        /// x + y &lt;= 2
+        /// </code>
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// A <see cref="LinearOptimizationService.Models.LinearResponseDto"/> with the solution
+        /// </returns>
         public LinearResponseDto SolveDemo()
         {
             // Create the linear solver with the GLOP backend
@@ -75,7 +78,7 @@ namespace LinearOptimizationService
             // Create the linear solver with the GLOP backend
             Solver solver = Solver.CreateSolver("GLOP");
 
-            // Create the variables x and y with constraints
+            // Create the variables with constraints
             Dictionary<string, Variable> variables = new();
             foreach (VariableDto variable in problem.Variables)
             {
@@ -85,7 +88,7 @@ namespace LinearOptimizationService
 
             Debug.WriteLine("Number of variables = {0}", solver.NumVariables());
 
-            // Create a linear constraints
+            // Create the linear constraints
             foreach (ConstraintDto constraint in problem.Constraints)
             {
                 Constraint ct = solver.MakeConstraint(constraint.Min, constraint.Max, constraint.Name);

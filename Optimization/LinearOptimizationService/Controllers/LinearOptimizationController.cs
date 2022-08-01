@@ -15,6 +15,18 @@ namespace LinearOptimizationService.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// An example solving a simple Linear Programming problem.
+        /// <para>Maximize 3x + y subject to the following constraints:</para>
+        /// <code>
+        /// 0 &lt;= x &lt;= 1
+        /// 0 &lt;= y &lt;= 2
+        /// x + y &lt;= 2
+        /// </code>
+        /// </summary>
+        /// <returns>
+        /// A <see cref="LinearOptimizationService.Models.LinearResponseDto"/> with the solution
+        /// </returns>
         [HttpGet("demo")]
         public ActionResult<LinearResponseDto> SolveDemo()
         {

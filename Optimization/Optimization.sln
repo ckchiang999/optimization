@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptimizationService", "Opti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinearOptimizationService", "LinearOptimizationService\LinearOptimizationService.csproj", "{02C19C68-D3A5-499D-8E7C-E5A3640624BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegerOptimizationService", "IntegerOptimizationService\IntegerOptimizationService.csproj", "{C239C376-549C-445C-A9E5-FDB4B5D8F633}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,14 @@ Global
 		{02C19C68-D3A5-499D-8E7C-E5A3640624BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{02C19C68-D3A5-499D-8E7C-E5A3640624BD}.Release|x64.ActiveCfg = Release|Any CPU
 		{02C19C68-D3A5-499D-8E7C-E5A3640624BD}.Release|x64.Build.0 = Release|Any CPU
+		{C239C376-549C-445C-A9E5-FDB4B5D8F633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C239C376-549C-445C-A9E5-FDB4B5D8F633}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C239C376-549C-445C-A9E5-FDB4B5D8F633}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C239C376-549C-445C-A9E5-FDB4B5D8F633}.Debug|x64.Build.0 = Debug|Any CPU
+		{C239C376-549C-445C-A9E5-FDB4B5D8F633}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C239C376-549C-445C-A9E5-FDB4B5D8F633}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C239C376-549C-445C-A9E5-FDB4B5D8F633}.Release|x64.ActiveCfg = Release|Any CPU
+		{C239C376-549C-445C-A9E5-FDB4B5D8F633}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

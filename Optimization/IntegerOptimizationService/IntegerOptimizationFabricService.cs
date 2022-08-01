@@ -1,18 +1,19 @@
 using System.Fabric;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using IntegerOptimizationService.Interfaces;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 
-namespace LinearOptimizationService
+namespace IntegerOptimizationService
 {
     /// <summary>
     /// The FabricRuntime creates an instance of this class for each service type instance.
     /// </summary>
-    internal sealed class LinearOptimizationFabricService : StatelessService
+    internal sealed class IntegerOptimizationFabricService : StatelessService
     {
-        public LinearOptimizationFabricService(StatelessServiceContext context)
+        public IntegerOptimizationFabricService(StatelessServiceContext context)
             : base(context)
         { }
 
@@ -32,6 +33,7 @@ namespace LinearOptimizationService
                         var builder = WebApplication.CreateBuilder();
 
                         builder.Services.AddSingleton<StatelessServiceContext>(serviceContext);
+                        builder.Services.AddScoped<IIntegerOptimization, IntegerOptimizationEngine>();
                         builder.WebHost
                             .UseKestrel(opt =>
                             {
@@ -60,12 +62,14 @@ namespace LinearOptimizationService
                             app.UseSwagger();
                             app.UseSwaggerUI();
                         }
-                        
+
                         app.UseHttpsRedirection();
                         app.UseAuthorization();
                         app.MapControllers();
 
                         return app;
+
+
                     }))
             };
         }
