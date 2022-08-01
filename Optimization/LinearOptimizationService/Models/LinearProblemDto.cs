@@ -15,6 +15,9 @@ namespace LinearOptimizationService.Models
         [DataMember(Name = "objective", IsRequired = true, EmitDefaultValue = false)]
         public ObjectiveDto Objective { get; set; }
 
+        [DataMember(Name = "time_limit", IsRequired = false, EmitDefaultValue = false)]
+        public long? TimeLimit { get; set; }
+
         public LinearProblemDto()
         {
             Variables = new List<VariableDto>();

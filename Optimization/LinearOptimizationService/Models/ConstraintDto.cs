@@ -2,6 +2,8 @@
 
 namespace LinearOptimizationService.Models
 {
+    [Serializable]
+    [DataContract(Name = "ConstraintDto", Namespace = "urn:Optimization.Dto")]
     public class ConstraintDto
     {
         [DataMember(Name = "min", IsRequired = true, EmitDefaultValue = false)]

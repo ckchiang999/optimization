@@ -6,5 +6,7 @@ namespace LinearOptimizationService
     {
         LinearResponseDto SolveDemo();
         LinearResponseDto Solve(LinearProblemDto problem);
+
+        LinearResponseDto SolveStiglerDietProblemDemo();
     }
 }

@@ -7,7 +7,7 @@ Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "Optimization", "Optimizatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptimizationService", "OptimizationService\OptimizationService.csproj", "{7C27FC47-A6C1-4890-A243-E816E3D4631E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearOptimizationService", "LinearOptimizationService\LinearOptimizationService.csproj", "{02C19C68-D3A5-499D-8E7C-E5A3640624BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinearOptimizationService", "LinearOptimizationService\LinearOptimizationService.csproj", "{02C19C68-D3A5-499D-8E7C-E5A3640624BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

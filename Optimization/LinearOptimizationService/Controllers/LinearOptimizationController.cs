@@ -15,7 +15,7 @@ namespace LinearOptimizationService.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "SolveDemo")]
+        [HttpGet("demo")]
         public ActionResult<LinearResponseDto> SolveDemo()
         {
             IDisposable? logScope = null;
@@ -38,7 +38,7 @@ namespace LinearOptimizationService.Controllers
             }
         }
 
-        [HttpPost(Name = "Solve")]
+        [HttpPost("solve")]
         public ActionResult<LinearResponseDto> Solve(LinearProblemDto problem)
         {
             IDisposable? logScope = null;
@@ -47,6 +47,29 @@ namespace LinearOptimizationService.Controllers
                 logScope = _logger.BeginScope("LinearOptimization Solve");
                 ILinearOptimization optimizer = new LinearOptimizationEngine();
                 LinearResponseDto result = optimizer.Solve(problem);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred");
+                throw;
+            }
+            finally
+            {
+                logScope?.Dispose();
+            }
+        }
+
+        [HttpGet("stiglerdiet")]
+        public ActionResult<LinearResponseDto> SolveStiglerDietProblemDemo()
+        {
+            IDisposable? logScope = null;
+            try
+            {
+                logScope = _logger.BeginScope("LinearOptimization SolveStiglerDietProblemDemo");
+                ILinearOptimization optimizer = new LinearOptimizationEngine();
+                LinearResponseDto result = optimizer.SolveStiglerDietProblemDemo();
 
                 return Ok(result);
             }
