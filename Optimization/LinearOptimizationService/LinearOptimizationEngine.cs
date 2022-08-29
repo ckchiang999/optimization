@@ -6,12 +6,18 @@ namespace LinearOptimizationService
 {
     public class LinearOptimizationEngine : ILinearOptimization
     {
+        /// <summary>
+        /// Uses a MPSolver 
+        /// </summary>
         public LinearOptimizationEngine()
         {
         }
 
         /// <summary>
-        /// Solves a simple Linear Programming problem.
+        /// Solves a simple Linear Programming (LP) problem using 
+        /// <see href="https://developers.google.com/optimization/lp/lp_example">GLOP</see>, 
+        /// Google's in-house linear programming solver.
+        /// 
         /// <para>Maximize 3x + y subject to the following constraints:</para>
         /// <code>
         /// 0 &lt;= x &lt;= 1
@@ -147,6 +153,12 @@ namespace LinearOptimizationService
             return result;
         }
 
+        /// <summary>
+        /// Solves the <see href="https://developers.google.com/optimization/lp/stigler_diet">Stigler diet problem</see>. 
+        /// From a list of foods and their nutritional values, solve for the most inexpensive way to fulfill the
+        /// minimum nutritional needs.
+        /// </summary>
+        /// <returns></returns>
         public LinearResponseDto SolveStiglerDietProblemDemo()
         {
             LinearProblemDto problem = new();

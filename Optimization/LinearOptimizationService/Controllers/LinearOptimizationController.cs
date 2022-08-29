@@ -27,7 +27,7 @@ namespace LinearOptimizationService.Controllers
         /// <returns>
         /// A <see cref="LinearOptimizationService.Models.LinearResponseDto"/> with the solution
         /// </returns>
-        [HttpGet("demo")]
+        [HttpPost("demo")]
         public ActionResult<LinearResponseDto> SolveDemo()
         {
             IDisposable? logScope = null;
@@ -73,7 +73,7 @@ namespace LinearOptimizationService.Controllers
             }
         }
 
-        [HttpGet("stiglerdiet")]
+        [HttpPost("stiglerdiet")]
         public ActionResult<LinearResponseDto> SolveStiglerDietProblemDemo()
         {
             IDisposable? logScope = null;

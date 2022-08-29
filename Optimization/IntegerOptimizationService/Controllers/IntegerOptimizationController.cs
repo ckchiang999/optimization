@@ -33,7 +33,7 @@ namespace IntegerOptimizationService.Controllers
         /// <returns>
         /// An <see cref="IntegerOptimizationService.Models.IntegerResponseDto"/>
         /// </returns>
-        [HttpGet("SolveDemo")]
+        [HttpPost("SolveDemo")]
         public ActionResult<IntegerResponseDto> SolveDemo()
         {
             IDisposable? logScope = null;
