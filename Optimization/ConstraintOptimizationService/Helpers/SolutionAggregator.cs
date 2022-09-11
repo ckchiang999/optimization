@@ -19,8 +19,10 @@ namespace ConstraintOptimizationService.Helpers
 
         public override void OnSolutionCallback()
         {
-            SolutionDto solutionDto = new();
-            solutionDto.TimeToSolve = WallTime();
+            SolutionDto solutionDto = new()
+            {
+                TimeToSolve = WallTime()
+            };
             foreach (IntVar variable in _variables)
             {
                 VariableResponseDto variableResponseDto = new()
@@ -31,7 +33,7 @@ namespace ConstraintOptimizationService.Helpers
                 solutionDto.Variables.Add(variableResponseDto);
             }
             _responseDto.Solutions.Add(solutionDto);
-            Debug.WriteLine($"Solution #{_responseDto.Solutions.Count()}: time = {solutionDto.TimeToSolve:F2}");
+            Debug.WriteLine($"Solution #{_responseDto.Solutions.Count}: time = {solutionDto.TimeToSolve:F2}");
             if (_solutionLimit.HasValue && _responseDto.SolutionCount >= _solutionLimit)
             {
                 StopSearch();

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <StartupServicesManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
+    <Parameter Name="AssignmentOptimizationService_InstanceCount" DefaultValue="-1" />
     <Parameter Name="ConstraintOptimizationService_InstanceCount" DefaultValue="-1" />
     <Parameter Name="IntegerOptimizationService_InstanceCount" DefaultValue="-1" />
     <Parameter Name="LinearOptimizationService_InstanceCount" DefaultValue="-1" />
@@ -12,6 +13,11 @@
          ServiceFabric PowerShell module.
 
          The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
+    <Service Name="AssignmentOptimizationService" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="AssignmentOptimizationServiceType" InstanceCount="[AssignmentOptimizationService_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
     <Service Name="ConstraintOptimizationService" ServicePackageActivationMode="ExclusiveProcess">
       <StatelessService ServiceTypeName="ConstraintOptimizationServiceType" InstanceCount="[ConstraintOptimizationService_InstanceCount]">
         <SingletonPartition />

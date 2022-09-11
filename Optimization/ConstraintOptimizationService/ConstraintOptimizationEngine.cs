@@ -53,7 +53,13 @@ namespace ConstraintOptimizationService
             else
             {
                 Debug.WriteLine("No solution found.");
-                response.Status = OptimizationStatus.Infeasible;
+                response.Status = status switch
+                {
+                    CpSolverStatus.ModelInvalid => OptimizationStatus.ModelInvalid,
+                    CpSolverStatus.Infeasible => OptimizationStatus.Infeasible,
+                    CpSolverStatus.Unknown => OptimizationStatus.Unknown,
+                    _ => OptimizationStatus.Unknown
+                };
             }
             return response;
         }
@@ -100,7 +106,7 @@ namespace ConstraintOptimizationService
         }
 
         /// <summary>
-        /// Demo solving a CP problem for optimal
+        /// Demo solving a CP (Constraint Programming) problem for optimal
         /// <para>Maximize 2x + 2y + 3z subject to the following constraints:</para>
         /// <code>
         /// x + (7/2)y + (3/2)z &lt;= 25
@@ -164,7 +170,13 @@ namespace ConstraintOptimizationService
             else
             {
                 Debug.WriteLine("No solution found.");
-                response.Status = OptimizationStatus.Infeasible;
+                response.Status = status switch
+                {
+                    CpSolverStatus.ModelInvalid => OptimizationStatus.ModelInvalid,
+                    CpSolverStatus.Infeasible => OptimizationStatus.Infeasible,
+                    CpSolverStatus.Unknown => OptimizationStatus.Unknown,
+                    _ => OptimizationStatus.Unknown
+                };
             }
 
             Debug.WriteLine("Statistics");
@@ -175,7 +187,7 @@ namespace ConstraintOptimizationService
         }
 
         /// <summary>
-        /// Demo solving a cryptarithmetic problem using CP solver and AllDifferent constraint.
+        /// Demo solving a cryptarithmetic problem using CP (Constraint Programming) solver and AllDifferent constraint.
         /// This is a puzzle where digits are represented by letters and
         /// each letter represents a different digit.
         /// <para>Find the digits such that:</para>
@@ -230,7 +242,9 @@ namespace ConstraintOptimizationService
                 CpSolverStatus.Optimal => OptimizationStatus.Optimal,
                 CpSolverStatus.Infeasible => OptimizationStatus.Infeasible,
                 CpSolverStatus.Feasible => OptimizationStatus.Feasible,
-                _ => OptimizationStatus.NotSolved
+                CpSolverStatus.ModelInvalid => OptimizationStatus.ModelInvalid,
+                CpSolverStatus.Unknown => OptimizationStatus.Unknown,
+                _ => OptimizationStatus.Unknown
             };
             response.NumberOfConflicts = solver.NumConflicts();
             response.NumberOfBranches = solver.NumBranches();
@@ -244,7 +258,7 @@ namespace ConstraintOptimizationService
         }
 
         /// <summary>
-        /// Demo solving the N-Queens problem using CP solver.
+        /// Demo solving the N-Queens problem using CP (Constraint Programming) solver.
         /// This is a combinatorial problem based on the game of chess.
         /// The CP approach uses propagation and backtracking strategy to solve the problem.
         /// <para>How can N queens be placed on an NxN chessboard so that no two of them attack each other?</para>
@@ -306,7 +320,9 @@ namespace ConstraintOptimizationService
                 CpSolverStatus.Optimal => OptimizationStatus.Optimal,
                 CpSolverStatus.Infeasible => OptimizationStatus.Infeasible,
                 CpSolverStatus.Feasible => OptimizationStatus.Feasible,
-                _ => OptimizationStatus.NotSolved
+                CpSolverStatus.ModelInvalid => OptimizationStatus.ModelInvalid,
+                CpSolverStatus.Unknown => OptimizationStatus.Unknown,
+                _ => OptimizationStatus.Unknown
             };
             response.NumberOfConflicts = solver.NumConflicts();
             response.NumberOfBranches = solver.NumBranches();

@@ -1,19 +1,19 @@
 using System.Fabric;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
-using ConstraintOptimizationService.Interfaces;
+using AssignmentOptimizationService.Interfaces;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 
-namespace ConstraintOptimizationService
+namespace AssignmentOptimizationService
 {
     /// <summary>
     /// The FabricRuntime creates an instance of this class for each service type instance.
     /// </summary>
-    internal sealed class ConstraintOptimizationFabricService : StatelessService
+    internal sealed class AssignmentOptimizationFabricService : StatelessService
     {
-        public ConstraintOptimizationFabricService(StatelessServiceContext context)
+        public AssignmentOptimizationFabricService(StatelessServiceContext context)
             : base(context)
         { }
 
@@ -33,7 +33,7 @@ namespace ConstraintOptimizationService
                         var builder = WebApplication.CreateBuilder();
 
                         builder.Services.AddSingleton<StatelessServiceContext>(serviceContext);
-                        builder.Services.AddScoped<IConstraintOptimization, ConstraintOptimizationEngine>();
+                        builder.Services.AddScoped<IAssignmentOptimization, AssignmentOptimizationEngine>();
 
                         builder.WebHost
                             .UseKestrel(opt =>
@@ -66,6 +66,7 @@ namespace ConstraintOptimizationService
                         app.UseHttpsRedirection();
                         app.UseAuthorization();
                         app.MapControllers();
+
                         return app;
                     }))
             };

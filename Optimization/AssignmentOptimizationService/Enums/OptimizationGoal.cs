@@ -1,4 +1,4 @@
-﻿namespace ConstraintOptimizationService
+﻿namespace AssignmentOptimizationService
 {
     public enum OptimizationGoal
     {

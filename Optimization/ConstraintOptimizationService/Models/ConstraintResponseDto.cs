@@ -9,7 +9,7 @@ namespace ConstraintOptimizationService.Models
         [DataMember(Name = "variables", IsRequired = true, EmitDefaultValue = false)]
         public ICollection<SolutionDto> Solutions { get; set; } = new List<SolutionDto>();
 
-        [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
         public OptimizationStatus Status { get; set; }
 
         [DataMember(Name = "solution_count", IsRequired = true, EmitDefaultValue = false)]

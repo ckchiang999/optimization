@@ -18,7 +18,7 @@ namespace LinearOptimizationService.Models
         [DataMember(Name = "time_to_solve", IsRequired = true, EmitDefaultValue = false)]
         public long? TimeToSolve { get; set; }
 
-        [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
         public OptimizationStatus Status { get; set; }
 
         public LinearResponseDto()
