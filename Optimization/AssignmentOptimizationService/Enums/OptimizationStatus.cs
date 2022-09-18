@@ -9,6 +9,7 @@
         Abnormal = 4,
         NotSolved = 6,
         ModelInvalid = 7,
-        Unknown = 8
+        Unknown = 8,
+        PossibleOverflow = 9
     }
 }

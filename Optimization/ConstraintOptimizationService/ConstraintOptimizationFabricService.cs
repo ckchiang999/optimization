@@ -5,6 +5,7 @@ using ConstraintOptimizationService.Interfaces;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
+using Newtonsoft.Json.Converters;
 
 namespace ConstraintOptimizationService
 {
@@ -49,7 +50,10 @@ namespace ConstraintOptimizationService
                             .UseUrls(url);
                         
                         // Add services to the container.
-                        builder.Services.AddControllers().AddNewtonsoftJson();
+                        builder.Services.AddControllers().AddNewtonsoftJson(jsonOptions =>
+                        {
+                            jsonOptions.SerializerSettings.Converters.Add(new StringEnumConverter());
+                        });
                         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
                         builder.Services.AddEndpointsApiExplorer();
                         builder.Services.AddSwaggerGen();

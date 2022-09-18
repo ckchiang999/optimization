@@ -4,6 +4,7 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
+using Newtonsoft.Json.Converters;
 
 namespace LinearOptimizationService
 {
@@ -46,7 +47,10 @@ namespace LinearOptimizationService
                             .UseUrls(url);
                         
                         // Add services to the container.
-                        builder.Services.AddControllers().AddNewtonsoftJson();
+                        builder.Services.AddControllers().AddNewtonsoftJson(jsonOptions =>
+                        {
+                            jsonOptions.SerializerSettings.Converters.Add(new StringEnumConverter());
+                        });
                         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
                         builder.Services.AddEndpointsApiExplorer();
                         builder.Services.AddSwaggerGen();
