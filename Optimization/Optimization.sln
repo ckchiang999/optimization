@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegerOptimizationService"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConstraintOptimizationService", "ConstraintOptimizationService\ConstraintOptimizationService.csproj", "{F1DAE4DF-C3D9-4922-BCAF-AAD457EA79F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssignmentOptimizationService", "AssignmentOptimizationService\AssignmentOptimizationService.csproj", "{36B00380-FD0F-4DCC-B9F2-FAC6BD5174C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssignmentOptimizationService", "AssignmentOptimizationService\AssignmentOptimizationService.csproj", "{36B00380-FD0F-4DCC-B9F2-FAC6BD5174C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutingOptimizationService", "RoutingOptimizationService\RoutingOptimizationService.csproj", "{44F937A5-7DA5-4430-9AD8-1ED101C6C28A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,14 @@ Global
 		{36B00380-FD0F-4DCC-B9F2-FAC6BD5174C0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{36B00380-FD0F-4DCC-B9F2-FAC6BD5174C0}.Release|x64.ActiveCfg = Release|Any CPU
 		{36B00380-FD0F-4DCC-B9F2-FAC6BD5174C0}.Release|x64.Build.0 = Release|Any CPU
+		{44F937A5-7DA5-4430-9AD8-1ED101C6C28A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F937A5-7DA5-4430-9AD8-1ED101C6C28A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F937A5-7DA5-4430-9AD8-1ED101C6C28A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{44F937A5-7DA5-4430-9AD8-1ED101C6C28A}.Debug|x64.Build.0 = Debug|Any CPU
+		{44F937A5-7DA5-4430-9AD8-1ED101C6C28A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F937A5-7DA5-4430-9AD8-1ED101C6C28A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F937A5-7DA5-4430-9AD8-1ED101C6C28A}.Release|x64.ActiveCfg = Release|Any CPU
+		{44F937A5-7DA5-4430-9AD8-1ED101C6C28A}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
