@@ -76,6 +76,16 @@ namespace RoutingOptimizationService.Controllers
             }
         }
 
+        /// <summary>
+        /// Demo solving a Vehicle Routing Problem (VRP).  Given multiple vehicles and multiple sets of locations to visit, 
+        /// find the optimal route, which we define as minimizing the length of the longest single route among all vehicles.
+        /// <para>
+        /// In this problem, we have 17 locations and 4 vehicles.
+        /// </para>
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RoutingResponseDto"/>
+        /// </returns>
         [HttpPost("DemoRoutingVehicleProblem")]
         public ActionResult<RoutingResponseDto> SolveVehicleRoutingProblem()
         {
@@ -84,6 +94,97 @@ namespace RoutingOptimizationService.Controllers
             {
                 logScope = _logger.BeginScope("RoutingOptimization SolveVehicleRoutingProblem()");
                 RoutingResponseDto result = _routingOptimizationEngine.SolveVehicleRoutingProblem();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred");
+                throw;
+            }
+            finally
+            {
+                logScope?.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Demo solving a Vehicle Routing Problem (VRP).  Given multiple vehicles, multiple sets of locations to visit, 
+        /// a carrying capacity for each vehicle, find the optimal route, defined here as minimizing the length of the longest single route
+        /// among all vehicles.
+        /// <para>
+        /// In this problem, we have 17 locations and 4 vehicles.
+        /// </para>
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RoutingResponseDto"/>
+        /// </returns>
+        [HttpPost("DemoCapacitatedRoutingVehicleProblem")]
+        public ActionResult<RoutingResponseDto> SolveCapacitatedVehicleRoutingProblem()
+        {
+            IDisposable? logScope = null;
+            try
+            {
+                logScope = _logger.BeginScope("RoutingOptimization SolveCapacitatedVehicleRoutingProblem()");
+                RoutingResponseDto result = _routingOptimizationEngine.SolveCapacitatedVehicleRoutingProblem();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred");
+                throw;
+            }
+            finally
+            {
+                logScope?.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Demo solving a Vehicle Routing Problem (VRP) with pick-ups and deliveries.
+        /// Given multiple vehicles and multiple pairs of pick-up and delivery locations,
+        /// minimize the distance of the longest route.  A pick-up delivery pair means
+        /// the pick-up location must be visited before the delivery location.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RoutingResponseDto"/>
+        /// </returns>
+        [HttpPost("DemoPickupDeliveryProblem")]
+        public ActionResult<RoutingResponseDto> SolvePickupDeliveryProblem()
+        {
+            IDisposable? logScope = null;
+            try
+            {
+                logScope = _logger.BeginScope("RoutingOptimization SolvePickupDeliveryProblem()");
+                RoutingResponseDto result = _routingOptimizationEngine.SolvePickupDeliveryProblem();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred");
+                throw;
+            }
+            finally
+            {
+                logScope?.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Demo solving a Vehicle Routing Problem (VRP) with time windows.
+        /// Given multiple vehicles and a time window available to each location,
+        /// minimize the total travel time of the vehicles.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RoutingResponseDto"/>
+        /// </returns>
+        [HttpPost("DemoTimeWindowProblem")]
+        public ActionResult<RoutingResponseDto> SolveTimeWindowProblem()
+        {
+            IDisposable? logScope = null;
+            try
+            {
+                logScope = _logger.BeginScope("RoutingOptimization SolveTimeWindowVehicleRoutingProblem()");
+                RoutingResponseDto result = _routingOptimizationEngine.SolveTimeWindowVehicleRoutingProblem();
                 return Ok(result);
             }
             catch (Exception ex)
