@@ -197,5 +197,57 @@ namespace RoutingOptimizationService.Controllers
                 logScope?.Dispose();
             }
         }
+
+        /// <summary>
+        /// Demo solving a Vehicle Routing Problem (VRP) with time windows and resource constraints.
+        /// Given multiple vehicles, a time window available to each location, 
+        /// constraints on loading and unloading times at each location, and
+        /// a maximum number of vehicles that can load and unload at each location,
+        /// minimize the total travel time of the vehicles.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RoutingResponseDto"/>
+        /// </returns>
+        [HttpPost("DemoResourceConstrainedTimeWindowProblem")]
+        public ActionResult<RoutingResponseDto> SolveResourceConstrainedTimeWindowProblem()
+        {
+            IDisposable? logScope = null;
+            try
+            {
+                logScope = _logger.BeginScope("RoutingOptimization SolveResourceConstrainedTimeWindowVehicleRoutingProblem()");
+                RoutingResponseDto result = _routingOptimizationEngine.SolveResourceConstrainedTimeWindowVehicleRoutingProblem();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred");
+                throw;
+            }
+            finally
+            {
+                logScope?.Dispose();
+            }
+        }
+
+        [HttpPost("DemoPenaltyDefinedProblem")]
+        public ActionResult<RoutingResponseDto> SolvePenaltyDefinedProblem()
+        {
+            IDisposable? logScope = null;
+            try
+            {
+                logScope = _logger.BeginScope("RoutingOptimization SolvePenaltyDefinedVehicleRoutingProblem()");
+                RoutingResponseDto result = _routingOptimizationEngine.SolvePenaltyDefinedVehicleRoutingProblem();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred");
+                throw;
+            }
+            finally
+            {
+                logScope?.Dispose();
+            }
+        }
     }
 }

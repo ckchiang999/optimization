@@ -68,5 +68,27 @@ namespace RoutingOptimizationService.Interfaces
         /// A <see cref="RoutingResponseDto"/>
         /// </returns>
         RoutingResponseDto SolveTimeWindowVehicleRoutingProblem();
+
+        /// <summary>
+        /// Demo solving a Vehicle Routing Problem (VRP) with time windows and resource constraints.
+        /// Given multiple vehicles, a time window available to each location, 
+        /// constraints on loading and unloading times at each location, and
+        /// a maximum number of vehicles that can load and unload at each location,
+        /// minimize the total travel time of the vehicles.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RoutingResponseDto"/>
+        /// </returns>
+        RoutingResponseDto SolveResourceConstrainedTimeWindowVehicleRoutingProblem();
+
+        /// <summary>
+        /// Demo solving a Vehicle Routing Problem (VRP) with penalties defined.
+        /// Given multiple vehicles, capacity constraints, and penalties for dropped
+        /// nodes defined, minimize the number of dropped nodes.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RoutingResponseDto"/>
+        /// </returns>
+        RoutingResponseDto SolvePenaltyDefinedVehicleRoutingProblem();
     }
 }
