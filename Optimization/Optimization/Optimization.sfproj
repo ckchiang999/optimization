@@ -45,6 +45,9 @@
     <ProjectReference Include="..\ConstraintOptimizationService\ConstraintOptimizationService.csproj">
       <ServiceLaunchUrl>https://localhost:{ServicePort}/swagger</ServiceLaunchUrl>
     </ProjectReference>
+    <ProjectReference Include="..\FlowOptimizationService\FlowOptimizationService.csproj">
+      <ServiceLaunchUrl>https://localhost:{ServicePort}/swagger</ServiceLaunchUrl>
+    </ProjectReference>
     <ProjectReference Include="..\IntegerOptimizationService\IntegerOptimizationService.csproj">
       <ServiceLaunchUrl>https://localhost:{ServicePort}/swagger</ServiceLaunchUrl>
     </ProjectReference>

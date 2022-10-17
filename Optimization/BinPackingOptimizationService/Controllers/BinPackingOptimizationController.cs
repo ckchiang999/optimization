@@ -29,7 +29,7 @@ namespace BinPackingOptimizationService.Controllers
         /// <returns>
         /// A <see cref="BinPackingResponseDto"/>
         /// </returns>
-        [HttpPost("DemoBinPackingKnapsackProblem")]
+        [HttpPost("DemoKnapsackProblem")]
         public ActionResult<BinPackingResponseDto> SolveKnapsackProblem()
         {
             IDisposable? logScope = null;
@@ -67,6 +67,48 @@ namespace BinPackingOptimizationService.Controllers
             {
                 logScope = _logger.BeginScope("BinPackingOptimization SolveMultipleKnapsackProblemWithMip()");
                 BinPackingResponseDto result = _binPackingOptimizationEngine.SolveMultipleKnapsackProblemWithMip();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred");
+                throw;
+            }
+            finally
+            {
+                logScope?.Dispose();
+            }
+        }
+
+        [HttpPost("DemoMultipleBinProblemWithCpSat")]
+        public ActionResult<BinPackingResponseDto> SolveMultipleKnapsackProblemWithCpSat()
+        {
+            IDisposable? logScope = null;
+            try
+            {
+                logScope = _logger.BeginScope("BinPackingOptimization SolveMultipleKnapsackProblemWithCpSat()");
+                BinPackingResponseDto result = _binPackingOptimizationEngine.SolveMultipleKnapsackProblemWithCpSat();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred");
+                throw;
+            }
+            finally
+            {
+                logScope?.Dispose();
+            }
+        }
+
+        [HttpPost("DemoBinPackingProblem")]
+        public ActionResult<BinPackingResponseDto> SolveBinPackingProblem()
+        {
+            IDisposable? logScope = null;
+            try
+            {
+                logScope = _logger.BeginScope("BinPackingOptimization SolveBinPackingProblem()");
+                BinPackingResponseDto result = _binPackingOptimizationEngine.SolveBinPackingProblem();
                 return Ok(result);
             }
             catch (Exception ex)

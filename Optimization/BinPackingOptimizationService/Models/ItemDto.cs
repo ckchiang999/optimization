@@ -6,7 +6,10 @@ namespace BinPackingOptimizationService.Models
     [DataContract(Name = "ItemDto", Namespace = "urn:Optimization.Dto")]
     public class ItemDto
     {
-        [DataMember(Name = "item_index", IsRequired = false, EmitDefaultValue = false)]
+        [DataMember(Name = "bin", IsRequired = false, EmitDefaultValue = false)]
+        public int? BinIndex;
+
+        [DataMember(Name = "item", IsRequired = false, EmitDefaultValue = false)]
         public int? ItemIndex;
 
         [DataMember(Name = "value", IsRequired = false, EmitDefaultValue = false)]
