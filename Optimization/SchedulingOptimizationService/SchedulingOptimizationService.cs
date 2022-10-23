@@ -1,20 +1,20 @@
 using System.Fabric;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
-using FlowOptimizationService.Interfaces;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Newtonsoft.Json.Converters;
+using SchedulingOptimizationService.Interfaces;
 
-namespace FlowOptimizationService
+namespace SchedulingOptimizationService
 {
     /// <summary>
     /// The FabricRuntime creates an instance of this class for each service type instance.
     /// </summary>
-    internal sealed class FlowOptimizationService : StatelessService
+    internal sealed class SchedulingOptimizationService : StatelessService
     {
-        public FlowOptimizationService(StatelessServiceContext context)
+        public SchedulingOptimizationService(StatelessServiceContext context)
             : base(context)
         { }
 
@@ -34,7 +34,7 @@ namespace FlowOptimizationService
                         var builder = WebApplication.CreateBuilder();
 
                         builder.Services.AddSingleton<StatelessServiceContext>(serviceContext);
-                        builder.Services.AddScoped<IFlowOptimization, FlowOptimizationEngine>();
+                        builder.Services.AddScoped<ISchedulingOptimization, SchedulingOptimizationEngine>();
 
                         builder.WebHost
                             .UseKestrel(opt =>
@@ -67,12 +67,14 @@ namespace FlowOptimizationService
                             app.UseSwagger();
                             app.UseSwaggerUI();
                         }
-                        
+
                         app.UseHttpsRedirection();
                         app.UseAuthorization();
                         app.MapControllers();
 
                         return app;
+
+
                     }))
             };
         }

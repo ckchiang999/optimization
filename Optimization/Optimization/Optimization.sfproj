@@ -60,6 +60,9 @@
     <ProjectReference Include="..\RoutingOptimizationService\RoutingOptimizationService.csproj">
       <ServiceLaunchUrl>https://localhost:{ServicePort}/swagger</ServiceLaunchUrl>
     </ProjectReference>
+    <ProjectReference Include="..\SchedulingOptimizationService\SchedulingOptimizationService.csproj">
+      <ServiceLaunchUrl>https://localhost:{ServicePort}/swagger</ServiceLaunchUrl>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <PropertyGroup>
