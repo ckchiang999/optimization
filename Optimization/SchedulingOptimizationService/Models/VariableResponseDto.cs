@@ -6,13 +6,13 @@ namespace SchedulingOptimizationService.Models
     [DataContract(Name = "SchedulingVariableResponseDto", Namespace = "urn:Optimization.Dto")]
     public class VariableResponseDto
     {
-        [DataMember(Name = "day", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "day", IsRequired = true, EmitDefaultValue = true)]
         public int? Day { get; set; }
 
-        [DataMember(Name = "employee", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "employee", IsRequired = true, EmitDefaultValue = true)]
         public int? Employee { get; set; }
 
-        [DataMember(Name = "shift", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "shift", IsRequired = true, EmitDefaultValue = true)]
         public int? Shift { get; set; }
 
         [DataMember(Name = "requested", IsRequired = true, EmitDefaultValue = false)]

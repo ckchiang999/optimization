@@ -7,23 +7,23 @@ namespace SchedulingOptimizationService.Helpers
     public class SolutionAggregator : CpSolverSolutionCallback
     {
         private readonly SchedulingResponseDto _responseDto;
-        private readonly int[] _nurses;
+        private readonly int[] _employees;
         private readonly int[] _days;
         private readonly int[] _shifts;
-        private readonly Dictionary<(int, int, int), BoolVar> _variables;
+        private readonly Dictionary<(int employee, int day, int shift), BoolVar> _variables;
         private readonly int? _solutionLimit;
         private int _solutionCount;
 
         public SolutionAggregator(
             SchedulingResponseDto responseDto,
-            int[] nurses,
+            int[] employees,
             int[] days,
             int[] shifts,
-            Dictionary<(int, int, int), BoolVar> variables, 
+            Dictionary<(int employee, int day, int shift), BoolVar> variables, 
             int? solutionLimit = null)
         {
             _responseDto = responseDto;
-            _nurses = nurses;
+            _employees = employees;
             _days = days;
             _shifts = shifts;
             _variables = variables;
@@ -37,19 +37,19 @@ namespace SchedulingOptimizationService.Helpers
             foreach (int day in _days)
             {
                 Debug.WriteLine($"Day {day}");
-                foreach (int nurse in _nurses)
+                foreach (int employee in _employees)
                 {
                     bool isWorking = false;
                     foreach (int shift in _shifts)
                     {
-                        if (Value(_variables[(nurse, day, shift)]) == 1)
+                        if (Value(_variables[(employee, day, shift)]) == 1)
                         {
                             isWorking = true;
-                            Debug.WriteLine($"Nurse {nurse} work shift {shift}");
+                            Debug.WriteLine($"Employee {employee} work shift {shift}");
                             solution.Variables.Add(new VariableResponseDto
                             {
                                 Day = day,
-                                Employee = nurse,
+                                Employee = employee,
                                 Shift = shift,
                                 Assigned = true
                             });
@@ -57,7 +57,7 @@ namespace SchedulingOptimizationService.Helpers
                     }
                     if (!isWorking)
                     {
-                        Debug.WriteLine($"Nurse {nurse} does not work");
+                        Debug.WriteLine($"Employee {employee} does not work");
                     }
                 }
             }
