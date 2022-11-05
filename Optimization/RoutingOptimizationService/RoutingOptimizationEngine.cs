@@ -275,7 +275,7 @@ namespace RoutingOptimizationService
                 { 912, 0 },    // location 2
                 { 0, 80 },     // location 3
                 { 114, 80 },   // location 4
-                { 570, 160 },  // locaiton 5
+                { 570, 160 },  // location 5
                 { 798, 160 },  // location 6
                 { 342, 240 },  // location 7
                 { 684, 240 },  // location 8
@@ -401,7 +401,7 @@ namespace RoutingOptimizationService
                 { 912, 0 },    // location 2
                 { 0, 80 },     // location 3
                 { 114, 80 },   // location 4
-                { 570, 160 },  // locaiton 5
+                { 570, 160 },  // location 5
                 { 798, 160 },  // location 6
                 { 342, 240 },  // location 7
                 { 684, 240 },  // location 8
@@ -538,7 +538,7 @@ namespace RoutingOptimizationService
                 { 912, 0 },    // location 2
                 { 0, 80 },     // location 3
                 { 114, 80 },   // location 4
-                { 570, 160 },  // locaiton 5
+                { 570, 160 },  // location 5
                 { 798, 160 },  // location 6
                 { 342, 240 },  // location 7
                 { 684, 240 },  // location 8
@@ -1191,6 +1191,161 @@ namespace RoutingOptimizationService
 
             Debug.WriteLine($"Total distance of all routes: {totalDistance}m");
             Debug.WriteLine($"Total load of all routes: {totalLoad}");
+
+            return response;
+        }
+
+        /// <summary>
+        /// Demo solving a warehouse wave picking problem.
+        /// A wave pick is a grouping of orders/deliveries that have items that 
+        /// needs to be picked in the warehouse.  The purpose is to group the orders
+        /// so that the distance travelled to pick items is minimized.
+        /// <para>
+        /// <list type="bullet">
+        ///     <item>There are 10 deliveries.</item>
+        ///     <item>Each delivery has one or more items.</item>
+        ///     <item>Each cart can hold 5 deliveries</item>
+        ///     <item>Each item has a storage location.</item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RoutingResponseDto"/>
+        /// </returns>
+        public RoutingResponseDto SolveWavePickingProblem()
+        {
+            RoutingResponseDto response = new();
+
+            // Define the collection of deliveries and location of items
+            int[][,] deliveries = new int[][,] 
+            {
+                new int[,] { { 0, 0 } },                                                   // start location
+                new int[,] { { 10, 10 }, { 10, 10 }, { 20, 20 }, { 20, 20 }, { 30, 30 } }, // delivery 1
+                new int[,] { { 10, 10 }, { 40, 40 }, { 50, 50 }, { 60, 60 }, { 60, 60 } }, // delivery 2
+                new int[,] { { 20, 20 }, { 30, 30 }, { 40, 40 }, { 50, 50 } },             // delivery 3
+                new int[,] { { 10, 10 }, { 20, 20 } },                                     // delivery 4
+                new int[,] { { 30, 30 }, { 40, 40 }, { 50, 50 }, { 60, 60 }, { 60, 60 } }, // delivery 5
+                new int[,] { { 10, 10 }, { 20, 20 }, { 20, 20 }, { 30, 30 } },             // delivery 6
+                new int[,] { { 30, 30 }, { 50, 50 }, { 60, 60 }, { 70, 70 }, { 80, 80 } }, // delivery 7
+                new int[,] { { 50, 50 }, { 50, 50 }, { 60, 60 }, { 70, 70 } },             // delivery 8
+                new int[,] { { 10, 10 }, { 60, 60 }, { 70, 70 }, { 80, 80 } },             // delivery 9
+                new int[,] { { 60, 60 }, { 70, 70 } },                                     // delivery 10
+            };
+
+            var deliveryCount = deliveries.GetLength(0);
+
+            // Define is the capacity (number of slots) for a vehicle (cart).
+            // For wave picking, we are assuming each cart has the same number of slots.
+            const int capacity = 5;
+
+            // Define how many vehicles are needed for all deliveries.
+            // We want to have enough vehicles to do every delivery so that we don't
+            // run into the situation where there is no feasible solution.
+            var divResult = Math.DivRem(deliveryCount - 1, capacity);
+            var vehicleNumber = divResult.Quotient + (divResult.Remainder > 0 ? 1 : 0);
+
+            // Depot is the starting location
+            const int depot = 0;
+
+            // Convert all the locations to a matrix of distances between each location
+            int[,] locations = DistanceCalculator.ComputeCentroidLocations(deliveries);
+            long[,] distanceMatrix = DistanceCalculator.ComputeMahattanDistanceMatrix(locations);
+
+            // Other than the starting point, each delivery will occupy a slot in the cart.
+            // Therefore each location (delivery) has a demand value of 1.
+            long[] demands = Enumerable.Repeat((long)1, deliveries.GetLength(0)).ToArray();
+            demands[0] = 0;
+
+            // Define the capacity of each vehicle.  In this case, it is the number of slots in the cart.
+            long[] vehicleCapacities = Enumerable.Repeat((long)capacity, vehicleNumber).ToArray();
+
+            // Create the routing index manager
+            // The manager does conversions of the solver's internal indices to the numbers for locations.
+            var manager = new RoutingIndexManager(locations.GetLength(0), vehicleNumber, depot);
+
+            // Create the routing modexl
+            var routing = new RoutingModel(manager);
+
+            int transitCallBackIndex = routing.RegisterTransitCallback(
+                (long fromIndex, long toIndex) =>
+                {
+                    // Convert from routing variable index to distance matrix NodeIndex
+                    var fromNode = manager.IndexToNode(fromIndex);
+                    var toNode = manager.IndexToNode(toIndex);
+                    return distanceMatrix[fromNode, toNode];
+                });
+
+            // Define cost of each arc/edge/route
+            routing.SetArcCostEvaluatorOfAllVehicles(transitCallBackIndex);
+
+            // Add Capacity constraint.
+            int demandCallbackIndex = routing.RegisterUnaryTransitCallback(
+                (long fromIndex) =>
+                {
+                    var fromNode = manager.IndexToNode(fromIndex);
+                    return demands[fromNode];
+                });
+
+            routing.AddDimensionWithVehicleCapacity(
+                demandCallbackIndex, // index of the callback function
+                slack_max: 0, // represents waiting times at the locations
+                vehicle_capacities: vehicleCapacities, // represents the maximum limit for the total distance accumulated along each route
+                fix_start_cumul_to_zero: true, // cumulative value to start at 0
+                name: "Capacity");
+
+            // Setting the first solution heuristic
+            // This does not always return the optimal solution.
+            RoutingSearchParameters searchParameters = operations_research_constraint_solver.DefaultRoutingSearchParameters();
+            // Solve for least sum of distances travelled of all routes
+            searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.PathCheapestArc;
+            searchParameters.LocalSearchMetaheuristic = LocalSearchMetaheuristic.Types.Value.GuidedLocalSearch;
+            // Limit the search to 3 seconds or this can potentially run for a very long time.
+            searchParameters.TimeLimit = new Duration { Seconds = 3 };
+
+            // Solve the problem
+            Assignment solution = routing.SolveWithParameters(searchParameters);
+
+            if (solution == null)
+            {
+                // No solution found
+                return response;
+            }
+
+            Debug.WriteLine($"Objective: {solution.ObjectiveValue()}");
+            Debug.WriteLine("Waves:");
+            long maxRouteDistance = 0;
+            for (int i = 0; i < vehicleNumber; i++)
+            {
+                Debug.WriteLine($"Wave {i}:");
+                long routeDistance = 0;
+                var index = routing.Start(i);
+                var route = new RouteResponseDto();
+                response.Routes.Add(route);
+                while (!routing.IsEnd(index))
+                {
+                    var fromLocationNode = manager.IndexToNode((int)index);
+                    Debug.Write($"{fromLocationNode} -> ");
+                    var previousIndex = index;
+                    index = solution.Value(routing.NextVar(index));
+                    var toLocationNode = manager.IndexToNode((int)index);
+                    routeDistance += routing.GetArcCostForVehicle(previousIndex, index, 0);
+                    route.Locations.Add(
+                        new LocationResponseDto
+                        {
+                            FromLocation = $"Delivery {fromLocationNode}",
+                            ToLocation = $"Delivery {toLocationNode}",
+                            Distance = routeDistance
+                        });
+                    route.TotalDistance = routeDistance;
+                }
+                Debug.WriteLine($"{manager.IndexToNode((int)index)}");
+                Debug.WriteLine($"Route distance: {routeDistance}");
+                maxRouteDistance = Math.Max(routeDistance, maxRouteDistance);
+            }
+            response.TotalDistance = response.Routes.Sum(r => r.TotalDistance);
+            response.MaximumDistance = maxRouteDistance;
+
+            Debug.WriteLine($"Maximum route distance: {maxRouteDistance}");
 
             return response;
         }

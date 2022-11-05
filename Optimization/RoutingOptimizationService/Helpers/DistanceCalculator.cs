@@ -60,5 +60,42 @@
             }
             return distanceMatrix;
         }
+
+        /// <summary>
+        /// Calculates the center of a set of locations.
+        /// </summary>
+        /// <param name="locations"></param>
+        /// <returns></returns>
+        public static (int x, int y) ComputeCentroid(int[,] locations)
+        {
+            var sumX = 0;
+            var sumY = 0;
+            var numLocations = locations.GetLength(0);
+            for (int i = 0; i < numLocations; i++)
+            {
+                sumX += locations[i, 0];
+                sumY += locations[i, 1];
+            }
+            return (sumX / numLocations, sumY / numLocations);
+        }
+
+        /// <summary>
+        /// Convert a set of deliveries, with each delivery having a set of items, into
+        /// a set of locations.
+        /// </summary>
+        /// <param name="deliveries"></param>
+        /// <returns></returns>
+        public static int[,] ComputeCentroidLocations(int[][,] deliveries)
+        {
+            var numDeliveries = deliveries.GetLength(0);
+            var locations = new int[numDeliveries,2];
+            for (int i = 0; i < numDeliveries; i++)
+            {
+                var centroid = ComputeCentroid(deliveries[i]);
+                locations[i, 0] = centroid.x;
+                locations[i, 1] = centroid.y;
+            }
+            return locations;
+        }
     }
 }

@@ -229,6 +229,14 @@ namespace RoutingOptimizationService.Controllers
             }
         }
 
+        /// <summary>
+        /// Demo solving a Vehicle Routing Problem (VRP) with penalties defined.
+        /// Given multiple vehicles, capacity constraints, and penalties for dropped
+        /// nodes defined, minimize the number of dropped nodes.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RoutingResponseDto"/>
+        /// </returns>
         [HttpPost("DemoPenaltyDefinedProblem")]
         public ActionResult<RoutingResponseDto> SolvePenaltyDefinedProblem()
         {
@@ -237,6 +245,44 @@ namespace RoutingOptimizationService.Controllers
             {
                 logScope = _logger.BeginScope("RoutingOptimization SolvePenaltyDefinedVehicleRoutingProblem()");
                 RoutingResponseDto result = _routingOptimizationEngine.SolvePenaltyDefinedVehicleRoutingProblem();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred");
+                throw;
+            }
+            finally
+            {
+                logScope?.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Demo solving a warehouse wave picking problem.
+        /// A wave pick is a grouping of orders/deliveries that have items that 
+        /// needs to be picked in the warehouse.  The purpose is to group the orders
+        /// so that the distance travelled to pick items is minimized.
+        /// <para>
+        /// <list type="bullet">
+        ///     <item>There are 10 deliveries.</item>
+        ///     <item>Each delivery has one or more items.</item>
+        ///     <item>Each cart can hold 5 deliveries</item>
+        ///     <item>Each item has a storage location.</item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RoutingResponseDto"/>
+        /// </returns>
+        [HttpPost("DemoWavePickingProblem")]
+        public ActionResult<RoutingResponseDto> SolveWavePickingProblem()
+        {
+            IDisposable? logScope = null;
+            try
+            {
+                logScope = _logger.BeginScope("RoutingOptimization SolveWavePickingProblem()");
+                RoutingResponseDto result = _routingOptimizationEngine.SolveWavePickingProblem();
                 return Ok(result);
             }
             catch (Exception ex)

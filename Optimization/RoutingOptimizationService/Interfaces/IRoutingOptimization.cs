@@ -90,5 +90,24 @@ namespace RoutingOptimizationService.Interfaces
         /// A <see cref="RoutingResponseDto"/>
         /// </returns>
         RoutingResponseDto SolvePenaltyDefinedVehicleRoutingProblem();
+
+        /// <summary>
+        /// Demo solving a warehouse wave picking problem.
+        /// A wave pick is a grouping of orders/deliveries that have items that 
+        /// needs to be picked in the warehouse.  The purpose is to group the orders
+        /// so that the distance travelled to pick items is minimized.
+        /// <para>
+        /// <list type="bullet">
+        ///     <item>There are 10 deliveries.</item>
+        ///     <item>Each delivery has one or more items.</item>
+        ///     <item>Each cart can hold 5 deliveries</item>
+        ///     <item>Each item has a storage location.</item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RoutingResponseDto"/>
+        /// </returns>
+        RoutingResponseDto SolveWavePickingProblem();
     }
 }
