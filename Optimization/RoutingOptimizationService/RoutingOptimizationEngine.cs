@@ -4,6 +4,7 @@ using Google.Protobuf.WellKnownTypes;
 using RoutingOptimizationService.Helpers;
 using RoutingOptimizationService.Interfaces;
 using RoutingOptimizationService.Models;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace RoutingOptimizationService
 {
@@ -1216,31 +1217,20 @@ namespace RoutingOptimizationService
         {
             RoutingResponseDto response = new();
 
-            // Define the collection of deliveries and location of items
-            int[][,] deliveries = new int[][,] 
-            {
-                new int[,] { { 0, 0 } },                                                   // start location
-                new int[,] { { 10, 10 }, { 10, 10 }, { 20, 20 }, { 20, 20 }, { 30, 30 } }, // delivery 1
-                new int[,] { { 10, 10 }, { 40, 40 }, { 50, 50 }, { 60, 60 }, { 60, 60 } }, // delivery 2
-                new int[,] { { 20, 20 }, { 30, 30 }, { 40, 40 }, { 50, 50 } },             // delivery 3
-                new int[,] { { 10, 10 }, { 20, 20 } },                                     // delivery 4
-                new int[,] { { 30, 30 }, { 40, 40 }, { 50, 50 }, { 60, 60 }, { 60, 60 } }, // delivery 5
-                new int[,] { { 10, 10 }, { 20, 20 }, { 20, 20 }, { 30, 30 } },             // delivery 6
-                new int[,] { { 30, 30 }, { 50, 50 }, { 60, 60 }, { 70, 70 }, { 80, 80 } }, // delivery 7
-                new int[,] { { 50, 50 }, { 50, 50 }, { 60, 60 }, { 70, 70 } },             // delivery 8
-                new int[,] { { 10, 10 }, { 60, 60 }, { 70, 70 }, { 80, 80 } },             // delivery 9
-                new int[,] { { 60, 60 }, { 70, 70 } },                                     // delivery 10
-            };
+            ////// Define the collection of deliveries and location of items
+            //int[][,] deliveries = new SampleData().GetDemoDeliveriesFiveSlotsPerCart();
+            //int[][,] deliveries = new SampleData().GetDemoDeliveriesTwoSlotsPerCart();
+            int[][,] deliveries = new SampleData().GetRandomDeliveries(200, 200, 1, 5);
 
-            var deliveryCount = deliveries.GetLength(0);
-
-            // Define is the capacity (number of slots) for a vehicle (cart).
-            // For wave picking, we are assuming each cart has the same number of slots.
+            //// Define is the capacity (number of slots) for a vehicle (cart).
+            //// For wave picking, we are assuming each cart has the same number of slots.
             const int capacity = 5;
+            //const int capacity = 2;
 
             // Define how many vehicles are needed for all deliveries.
             // We want to have enough vehicles to do every delivery so that we don't
             // run into the situation where there is no feasible solution.
+            var deliveryCount = deliveries.GetLength(0);
             var divResult = Math.DivRem(deliveryCount - 1, capacity);
             var vehicleNumber = divResult.Quotient + (divResult.Remainder > 0 ? 1 : 0);
 
@@ -1328,20 +1318,35 @@ namespace RoutingOptimizationService
                     var previousIndex = index;
                     index = solution.Value(routing.NextVar(index));
                     var toLocationNode = manager.IndexToNode((int)index);
+                    string deliveriesInRoute = "";
+                    if (toLocationNode != 0)
+                    {
+                        deliveriesInRoute = $"Delivery: {toLocationNode}, Items: ";
+                        for (int j = 0; j < deliveries[toLocationNode].GetLength(0); j++)
+                        {
+                            deliveriesInRoute += $"({deliveries[toLocationNode][j, 0]},{deliveries[toLocationNode][j, 1]}) ";
+                        }
+                    } 
+                    else
+                    {
+                        deliveriesInRoute = "Delivery 0";
+                    }
                     routeDistance += routing.GetArcCostForVehicle(previousIndex, index, 0);
                     route.Locations.Add(
                         new LocationResponseDto
                         {
                             FromLocation = $"Delivery {fromLocationNode}",
-                            ToLocation = $"Delivery {toLocationNode}",
+                            ToLocation = deliveriesInRoute, // $"Delivery {toLocationNode}",
                             Distance = routeDistance
                         });
                     route.TotalDistance = routeDistance;
                 }
                 Debug.WriteLine($"{manager.IndexToNode((int)index)}");
                 Debug.WriteLine($"Route distance: {routeDistance}");
+
                 maxRouteDistance = Math.Max(routeDistance, maxRouteDistance);
             }
+
             response.TotalDistance = response.Routes.Sum(r => r.TotalDistance);
             response.MaximumDistance = maxRouteDistance;
 
